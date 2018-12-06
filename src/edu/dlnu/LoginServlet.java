@@ -24,18 +24,18 @@ public class LoginServlet extends HttpServlet {
 
         try {
             Connection connection = JdbcUtils.getConnection();
-            PreparedStatement st = connection.prepareStatement("select * from user_teacher;");
+            PreparedStatement st = connection.prepareStatement("select * from new_schema.user_teacher;");
             ResultSet resultSet = st.executeQuery();
 
             while (resultSet.next()) {
-                String Tusername = resultSet.getString(1);
-                String Tpassword = resultSet.getString(2);
+                String tusername = resultSet.getString(1);
+                String tpassword = resultSet.getString(2);
 
-                if (username == Tusername && password == Tpassword) {
+                if (username.equals(tusername) && password.equals(tpassword)) {
                     request.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(request, response);
                 } else {
-                    request.setAttribute("msg","用户名或密码不对");
-                    request.getRequestDispatcher("/WEB-INF/pages/loginview.jsp").forward(request, response);
+                    request.setAttribute("msg","用户名或者密码不对！！！");
+                    request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
                 }
             }
         } catch (SQLException e) {
